@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: pos-v2-web
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: API_BASE_URL
+        value: "https://pos-v2.uat.camcyber.com/api"
+      - key: FILE_BASE_URL
+        value: "https://pos-v2.uat.camcyber.com/file"
+      - key: SOCKET_URL
+        value: "https://pos-v2.uat.camcyber.com"
