@@ -1,0 +1,28 @@
+services:
+  db-pos:
+    image: postgres:15-alpine
+    container_name: db-pos
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: pos_v2
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  api-v4:
+    build: ./api-v4
+    container_name: api-v4
+    depends_on:
+      - db-pos
+    ports:
+      - "3000:3000"
+
+  web-v4:
+      build:
+        context: ./web-v4
+        args:
+          - API_BASE_URL=https://pos-v2.uat.camcyber.com/api
+          - FILE_BASE_URL=https://pos-v2.uat.camcyber.com/file
+      container_name: web-v4
+      ports:
+        - "80:80"
